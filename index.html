@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Selamat Ulang Tahun!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: radial-gradient(circle at center, #000 0%, #111 100%);
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 3.5em;
+      background: linear-gradient(45deg, #ff00cc, #ffcc00, #00ffff, #00ff00);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradient 5s ease infinite, fadeSlide 1.5s ease-out forwards;
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+
+    p {
+      font-size: 1.5em;
+      margin-top: 20px;
+      opacity: 0;
+      animation: fadeIn 2s ease 1.2s forwards;
+    }
+
+    #playBtn {
+      margin-top: 30px;
+      padding: 12px 24px;
+      font-size: 1em;
+      font-weight: bold;
+      border: none;
+      border-radius: 25px;
+      background: linear-gradient(135deg, #ff6ec4, #7873f5);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease, background 0.3s;
+    }
+
+    #playBtn:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #f93fc1, #5e5ff5);
+    }
+
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeSlide {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .firework {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      animation: firework 1.5s ease-out infinite;
+    }
+
+    @keyframes firework {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-150px) scale(0.5);
+        opacity: 0;
+      }
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: sparkle 2s ease-in-out infinite;
+    }
+
+    @keyframes sparkle {
+      0% { opacity: 0; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+      100% { opacity: 0; transform: scale(1); }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.2em;
+      }
+      p {
+        font-size: 1.2em;
+      }
+      #playBtn {
+        font-size: 0.9em;
+        padding: 10px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>SELAMAT ULANG TAHUN!</h1>
+  <p>Semoga harimu penuh kebahagiaan & sentiasa mendapat keberkahan</p>
+
+  <button id="playBtn">Klick</button>
+  <audio id="bgMusic" src="https://files.catbox.moe/wr1odo.mp3"></audio>
+
+  <script>
+    function createFirework() {
+      const firework = document.createElement('div');
+      firework.classList.add('firework');
+      firework.style.left = Math.random() * 100 + 'vw';
+      firework.style.top = '100vh';
+      firework.style.background = `hsl(${Math.random() * 360}, 100%, 60%)`;
+      document.body.appendChild(firework);
+      setTimeout(() => firework.remove(), 1500);
+    }
+
+    function createSparkle() {
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkle.style.left = Math.random() * 100 + 'vw';
+      sparkle.style.top = Math.random() * 100 + 'vh';
+      sparkle.style.background = `hsl(${Math.random() * 360}, 100%, 80%)`;
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 2000);
+    }
+
+    setInterval(createFirework, 300);
+    setInterval(createSparkle, 200);
+
+    const playBtn = document.getElementById('playBtn');
+    const bgMusic = document.getElementById('bgMusic');
+    let isPlaying = false;
+
+    playBtn.addEventListener('click', () => {
+      if (!isPlaying) {
+        bgMusic.play();
+        playBtn.textContent = 'Pause Lagu';
+      } else {
+        bgMusic.pause();
+        playBtn.textContent = 'Putar Lagu';
+      }
+      isPlaying = !isPlaying;
+    });
+  </script>
+</body>
+</html>
